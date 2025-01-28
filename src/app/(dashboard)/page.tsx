@@ -7,7 +7,7 @@ export default function Home() {
 
     <div className=" bg-white">
       {/* <h1 className="text-lg font-bold">سلام</h1> */}
-      <div className="max-w-[1720px] mx-auto px-4 md:px-8 pt-24">
+      <div className=" mx-auto px-4 md:px-8 pt-24">
 
       <div className="rounded-md p-8 md:p-10 shadow-sm  border border-[#e3e3e3]">
 
