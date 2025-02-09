@@ -13,8 +13,8 @@ export default function Home() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
 
-          <TextField variant="outlined" label="نام" size="small" />
-          <FormControl fullWidth size="small" >
+          <TextField variant="outlined" label="نام" />
+          <FormControl fullWidth >
             <InputLabel id="demo-simple-select-label">     تاریخ شروع
             </InputLabel>
             <Select
@@ -32,7 +32,7 @@ export default function Home() {
         </div>
         <div className="flex gap-4 justify-end items-center mt-8">
           <Link href={"/crm"}>Crm</Link>
-          <Button size="medium" variant="contained">ذخیره</Button>
+          <Button  variant="contained">ذخیره</Button>
         </div>
       </div>
       </div>
