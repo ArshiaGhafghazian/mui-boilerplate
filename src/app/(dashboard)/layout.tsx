@@ -2,13 +2,55 @@
 import { Avatar, Divider, Drawer, IconButton, ListItemButton, ListItemIcon, ListItemText, Menu, MenuItem, Tooltip } from "@mui/material";
 import React, { useState } from "react";
 import MenuOpenIcon from '@mui/icons-material/MenuOpen';
-import { Dns, KeyboardArrowDown, People, PermMedia, Public } from "@mui/icons-material";
-const data = [
-    { icon: <People />, label: 'Authentication' },
-    { icon: <Dns />, label: 'Database' },
-    { icon: <PermMedia />, label: 'Storage' },
-    { icon: <Public />, label: 'Hosting' },
-];
+import { Dns, KeyboardArrowDown, People } from "@mui/icons-material";
+
+const NAV_DATA = [
+    {
+        icon: <People />,
+        label: 'Authentication',
+        href: "",
+        children: [
+            {
+                label: "login",
+                href: "#"
+            },
+            {
+                label: "logout",
+                href: "#"
+            },
+        ]
+    },
+    {
+        icon: <Dns />,
+        label: 'Database',
+        href: "",
+        children: [
+            {
+                label: "my sql",
+                href: "#"
+            },
+            {
+                label: "mongo db",
+                href: "#"
+            },
+        ]
+    },
+    {
+        icon: <Dns />,
+        label: 'Hosting',
+        href: "",
+        children: [
+            {
+                label: "wordpress",
+                href: "#"
+            },
+            {
+                label: "node js",
+                href: "#"
+            },
+        ]
+    }
+]
 
 export default function DashboardLayout({ children }: Readonly<{ children: React.ReactNode }>) {
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -25,235 +67,87 @@ export default function DashboardLayout({ children }: Readonly<{ children: React
         <div className="flex">
             <div className="w-[250px] border-e border-e-[#e3e3e3] min-h-screen h-screen overflow-y-auto hidden lg:block">
                 <div className="h-16 flex items-center justify-center">LOGO</div>
-                
-                    <ListItemButton
-                        alignItems="flex-start"
-                        onClick={() => setOpenItem(!openItem)}
-                        sx={[
-                            {
-                                px: 3,
-                                py: 2.5,
-                            },
-                           
-                            openItem
-                                ? {
-                                    '&:hover, &:focus': {
-                                        '& svg': {
-                                            opacity: 1,
-                                        },
-                                    },
-                                }
-                                : {
-                                    '&:hover, &:focus': {
-                                        '& svg': {
-                                            opacity: 0,
-                                        },
-                                    },
-                                },
-                        ]}
-                    >
-                        <ListItemText
-                            primary="Build"
-                            primaryTypographyProps={{
-                                fontSize: 15,
-                                fontWeight: 'medium',
-                                lineHeight: '20px',
-                                mb: '2px',
-                            }}
-                          
-                            secondaryTypographyProps={{
-                                noWrap: true,
-                                fontSize: 12,
-                                lineHeight: '16px',
-                                color: openItem ? 'rgba(0,0,0,0)' : 'rgba(255,255,255,0.5)',
-                            }}
-                            sx={{ my: 0 }}
-                        />
-                        <KeyboardArrowDown
+                {NAV_DATA.map((item, index) => (
+                    <React.Fragment key={index}>
+                        <ListItemButton
+                            alignItems="flex-start"
+                            onClick={() => setOpenItem(!openItem)}
                             sx={[
                                 {
-                                    mr: -1,
-                                    opacity: 0,
-                                    transition: '0.2s',
+                                    px: 3,
+                                    py: 2.5,
                                 },
+
                                 openItem
                                     ? {
-                                        transform: 'rotate(-180deg)',
+                                        '&:hover, &:focus': {
+                                            '& svg': {
+                                                opacity: 1,
+                                            },
+                                        },
                                     }
                                     : {
-                                        transform: 'rotate(0)',
+                                        '&:hover, &:focus': {
+                                            '& svg': {
+                                                opacity: 0,
+                                            },
+                                        },
                                     },
                             ]}
-                        />
-                    </ListItemButton>
-                    {openItem &&
-                        data.map((item) => (
+                        >
+                            <ListItemIcon sx={{ color: 'inherit' }}>
+                                {item.icon}
+                            </ListItemIcon>
+                            <ListItemText
+                                primary={item.label}
+                                primaryTypographyProps={{
+                                    fontSize: 15,
+                                    fontWeight: 'medium',
+                                    lineHeight: '20px',
+                                    mb: '2px',
+                                }}
+
+                                secondaryTypographyProps={{
+                                    noWrap: true,
+                                    fontSize: 12,
+                                    lineHeight: '16px',
+                                    color: 'rgba(255,255,255,0.5)',
+                                }}
+                                sx={{ my: 0 }}
+                            />
+                            {item.children && <KeyboardArrowDown
+                                sx={[
+                                    {
+                                        mr: -1,
+                                        opacity: 0,
+                                        transition: '0.2s',
+                                    },
+                                    openItem
+                                        ? {
+                                            transform: 'rotate(-180deg)',
+                                        }
+                                        : {
+                                            transform: 'rotate(0)',
+                                        },
+                                ]}
+                            />}
+
+                        </ListItemButton>
+                        {openItem && item.children.length > 0 && item.children.map((child) => (
                             <ListItemButton
-                                key={item.label}
-                                sx={{ py: 2.5, minHeight: 32, color: 'rgba(255,255,255,.8)' }}
+                                key={child.label}
+                                sx={{ py: 2.5, minHeight: 32, color: 'red' }}
                             >
-                                <ListItemIcon sx={{ color: 'inherit' }}>
-                                    {item.icon}
-                                </ListItemIcon>
+
                                 <ListItemText
                                     primary={item.label}
                                     primaryTypographyProps={{ fontSize: 14, fontWeight: 'medium' }}
                                 />
                             </ListItemButton>
                         ))}
-          
-                    <ListItemButton
-                        alignItems="flex-start"
-                        onClick={() => setOpenItem(!openItem)}
-                        sx={[
-                            {
-                                px: 3,
-                                py: 2.5,
-                            },
-                           
-                            openItem
-                                ? {
-                                    '&:hover, &:focus': {
-                                        '& svg': {
-                                            opacity: 1,
-                                        },
-                                    },
-                                }
-                                : {
-                                    '&:hover, &:focus': {
-                                        '& svg': {
-                                            opacity: 0,
-                                        },
-                                    },
-                                },
-                        ]}
-                    >
-                        <ListItemText
-                            primary="Build"
-                            primaryTypographyProps={{
-                                fontSize: 15,
-                                fontWeight: 'medium',
-                                lineHeight: '20px',
-                                mb: '2px',
-                            }}
-                          
-                            secondaryTypographyProps={{
-                                noWrap: true,
-                                fontSize: 12,
-                                lineHeight: '16px',
-                                color: openItem ? 'rgba(0,0,0,0)' : 'rgba(255,255,255,0.5)',
-                            }}
-                            sx={{ my: 0 }}
-                        />
-                        <KeyboardArrowDown
-                            sx={[
-                                {
-                                    mr: -1,
-                                    opacity: 0,
-                                    transition: '0.2s',
-                                },
-                                openItem
-                                    ? {
-                                        transform: 'rotate(-180deg)',
-                                    }
-                                    : {
-                                        transform: 'rotate(0)',
-                                    },
-                            ]}
-                        />
-                    </ListItemButton>
-                    {openItem &&
-                        data.map((item) => (
-                            <ListItemButton
-                                key={item.label}
-                                sx={{ py: 2.5, minHeight: 32, color: 'rgba(255,255,255,.8)' }}
-                            >
-                                <ListItemIcon sx={{ color: 'inherit' }}>
-                                    {item.icon}
-                                </ListItemIcon>
-                                <ListItemText
-                                    primary={item.label}
-                                    primaryTypographyProps={{ fontSize: 14, fontWeight: 'medium' }}
-                                />
-                            </ListItemButton>
-                        ))}
-          
-                    <ListItemButton
-                        alignItems="flex-start"
-                        onClick={() => setOpenItem(!openItem)}
-                        sx={[
-                            {
-                                px: 3,
-                                py: 2.5,
-                            },
-                           
-                            openItem
-                                ? {
-                                    '&:hover, &:focus': {
-                                        '& svg': {
-                                            opacity: 1,
-                                        },
-                                    },
-                                }
-                                : {
-                                    '&:hover, &:focus': {
-                                        '& svg': {
-                                            opacity: 0,
-                                        },
-                                    },
-                                },
-                        ]}
-                    >
-                        <ListItemText
-                            primary="Build"
-                            primaryTypographyProps={{
-                                fontSize: 15,
-                                fontWeight: 'medium',
-                                lineHeight: '20px',
-                                mb: '2px',
-                            }}
-                          
-                            secondaryTypographyProps={{
-                                noWrap: true,
-                                fontSize: 12,
-                                lineHeight: '16px',
-                                color: openItem ? 'rgba(0,0,0,0)' : 'rgba(255,255,255,0.5)',
-                            }}
-                            sx={{ my: 0 }}
-                        />
-                        <KeyboardArrowDown
-                            sx={[
-                                {
-                                    mr: -1,
-                                    opacity: 0,
-                                    transition: '0.2s',
-                                },
-                                openItem
-                                    ? {
-                                        transform: 'rotate(-180deg)',
-                                    }
-                                    : {
-                                        transform: 'rotate(0)',
-                                    },
-                            ]}
-                        />
-                    </ListItemButton>
-                    {openItem &&
-                        data.map((item) => (
-                            <ListItemButton
-                                key={item.label}
-                                sx={{ py: 2.5, minHeight: 32, color: 'rgba(255,255,255,.8)' }}
-                            >
-                                <ListItemIcon sx={{ color: 'inherit' }}>
-                                    {item.icon}
-                                </ListItemIcon>
-                                <ListItemText
-                                    primary={item.label}
-                                    primaryTypographyProps={{ fontSize: 14, fontWeight: 'medium' }}
-                                />
-                            </ListItemButton>
-                        ))}
-          
+                    </React.Fragment>
+                ))}
+
 
             </div>
             <div className="flex-1">
